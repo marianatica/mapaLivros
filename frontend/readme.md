@@ -180,23 +180,6 @@ src/
 
 ---
 
-## 🔮 Possíveis Melhorias Futuras
-
-1. **Paginação/Scroll infinito**: Carregar mais resultados conforme o usuário rola.
-2. **Cache de requisições**: Implementar cache local para evitar requisições repetidas.
-3. **Busca avançada**: Filtros por autor, ano, idioma.
-4. **GeoJSON**: Usar polígonos GeoJSON para colorir os países no mapa em vez de apenas marcadores.
-5. **Detalhes do país**: Página/modal com informações detalhadas ao clicar em um país.
-6. **Favoritos**: Sistema de favoritos com localStorage.
-7. **Modo claro**: Toggle entre tema claro e escuro.
-8. **PWA**: Transformar em Progressive Web App para uso offline.
-9. **Testes**: Adicionar testes unitários (Vitest) e e2e (Playwright).
-10. **i18n**: Internacionalização para múltiplos idiomas da interface.
-11. **TypeScript**: Migração para TypeScript para maior segurança de tipos.
-12. **Estado global**: Migrar para Zustand ou Redux se a complexidade aumentar.
-
----
-
 ## 📄 Licença
 
 Este projeto foi desenvolvido para fins acadêmicos e educacionais.
