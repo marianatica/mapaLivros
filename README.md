@@ -1,4 +1,4 @@
-# 🌎 MapaLivros — Descubra o Mundo Através dos Livros
+# 🌎 MapaLivros: Descubra o Mundo Através dos Livros
 
 O **MapaLivros** é uma aplicação web interativa que conecta a literatura com a geografia do mundo. Ao pesquisar e selecionar um livro, o sistema identifica o idioma da obra e, em tempo real, destaca em um mapa interativo todos os países onde esse idioma é falado oficialmente.
 
