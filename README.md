@@ -114,23 +114,48 @@ Abaixo está o registro detalhado de cada fase da interação com a IA desde a e
 
 ---
 
-## 🎯 Exemplos de Prompts Utilizados
+## 🤖 Registro de Interações com a IA
 
-Abaixo, alguns exemplos de como a comunicação direta com a IA através do **Antigravity** foi essencial para direcionar o desenvolvimento e tomar decisões arquiteturais:
+### Interação 1 — Estruturação do Projeto
 
-*   **Para Direcionamento de Design:**
-    > *"A ideia é ter um visual moderno, com um toque de premium. Use tons de violeta e índigo, aplique efeitos de glassmorphism e use fontes que tragam uma sensação de elegância para os títulos."*
+**Solicitação**: Criar a aplicação completa com todos os requisitos especificados.
 
-*   **Para Resolução de Problemas Técnicos (Mapeamento de Idiomas):**
-    > *"O sistema está falhando ao buscar países porque a API de livros usa códigos de 3 letras e a API de países usa 2 letras. Crie um mapeamento para que essa conversão aconteça automaticamente durante a busca."*
+**Decisões tomadas pela IA**:
+- Criação do projeto com estrutura Vite + React manualmente (o `create-vite` não aceitou diretório com arquivo existente).
+- Organização em `components/`, `services/`, `hooks/` conforme requisitado.
+- Uso de JavaScript puro (não TypeScript) conforme especificado.
 
-*   **Para Automação de Fluxo de Trabalho (Git):**
-    > *"Quero passar minhas novas atualizações da pasta mapaLivros para o github https://github.com/marianatica/mapaLivros"*
+### Interação 2 — Design System
 
-*   **Para Refatoração e Melhoria Contínua:**
-    > *"Atualize o estilo e a lógica dos componentes de mapa, busca e detalhes para que fiquem mais consistentes com o novo design system."*
+**Decisões tomadas pela IA**:
+- Tema dark com paleta violeta/índigo para visual premium.
+- Google Fonts: Inter (400-800) + Playfair Display (600-800).
+- Sistema de design tokens com CSS Custom Properties.
+- Glassmorphism com `backdrop-filter: blur()`.
+- Animações CSS: fadeIn, slideUp, scaleIn, shimmer.
 
----
+### Interação 3 — Serviços de API
+
+**Decisões tomadas pela IA**:
+- Criação de mapa ISO 639-2/B → ISO 639-1 com 50+ idiomas.
+- Uso do endpoint `/lang/{code}` da REST Countries com campos específicos para otimizar payload.
+- Tratamento de erros diferenciado por tipo (rede, HTTP, dados).
+
+### Interação 4 — Componentes React
+
+**Decisões tomadas pela IA**:
+- Hook `useBooks` centralizado com todos os estados.
+- Componente `FitBounds` interno ao `CountryMap` para ajuste automático de viewport.
+- Marcadores customizados com bandeiras usando `L.divIcon`.
+- Ícones SVG inline para evitar dependência de bibliotecas de ícones.
+
+### Interação 5 — Mapa Interativo
+
+**Decisões tomadas pela IA**:
+- CARTO Dark tiles em vez do OpenStreetMap padrão para coerência visual.
+- Popups com dados formatados (população com separador de milhares brasileiro).
+- Lista de países como chips abaixo do mapa para referência rápida.
+- Tratamento de erro específico para falha de carregamento do mapa.
 
 ## 👥 Autoria e Conclusão
 
