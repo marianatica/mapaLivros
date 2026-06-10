@@ -76,7 +76,7 @@ export const LANGUAGE_NAMES = {
   ger: 'German',
   ita: 'Italian',
   rus: 'Russian',
-  chi: 'Chinese',
+  cmn: 'Chinese',
   jpn: 'Japanese',
   kor: 'Korean',
   ara: 'Arabic',

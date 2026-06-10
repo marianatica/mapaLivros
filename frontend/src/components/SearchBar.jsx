@@ -1,21 +1,11 @@
 import { useState } from 'react';
 
-/**
- * Componente de barra de busca.
- * Permite ao usuário pesquisar livros pelo título.
- *
- * @param {Object} props
- * @param {Function} props.onSearch - Callback chamado ao submeter a busca.
- * @param {boolean} props.loading - Indica se uma busca está em andamento.
- */
 export default function SearchBar({ onSearch, loading }) {
   const [query, setQuery] = useState('');
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (query.trim()) {
-      onSearch(query.trim());
-    }
+    if (query.trim()) onSearch(query.trim());
   };
 
   return (
@@ -25,7 +15,7 @@ export default function SearchBar({ onSearch, loading }) {
           id="search-input"
           type="text"
           className="search-bar__input"
-          placeholder=""
+          placeholder="Pesquisar por título do livro..."
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           disabled={loading}
@@ -41,11 +31,13 @@ export default function SearchBar({ onSearch, loading }) {
           {loading ? (
             <span className="search-bar__spinner" />
           ) : (
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-              <circle cx="5" cy="12" r="2" />
-              <circle cx="12" cy="12" r="2" />
-              <circle cx="19" cy="12" r="2" />
-            </svg>
+            <>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <circle cx="11" cy="11" r="8" />
+                <line x1="21" y1="21" x2="16.65" y2="16.65" />
+              </svg>
+              Buscar
+            </>
           )}
         </button>
       </div>

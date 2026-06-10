@@ -2,79 +2,47 @@ import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import { useEffect, useState } from 'react';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
+import { getLanguageName } from '../services/openLibrary';
 
-/**
- * Componente para ajustar automaticamente o zoom e a posição do mapa
- * para exibir todos os marcadores.
- */
 function FitBounds({ countries }) {
   const map = useMap();
-
   useEffect(() => {
     if (countries.length === 0) return;
-
-    const bounds = L.latLngBounds(
-      countries.map((c) => c.latlng)
-    );
-
+    const bounds = L.latLngBounds(countries.map((c) => c.latlng));
     map.fitBounds(bounds, { padding: [50, 50], maxZoom: 5 });
   }, [countries, map]);
-
   return null;
 }
 
-/**
- * Cria um ícone customizado para o marcador do mapa
- * usando a bandeira do país como ícone.
- */
 function createFlagIcon(flagUrl) {
   return L.divIcon({
     className: 'country-marker',
-    html: `
-      <div class="country-marker__pin">
-        <img src="${flagUrl}" alt="" class="country-marker__flag" />
-      </div>
-    `,
-    iconSize: [40, 48],
-    iconAnchor: [20, 48],
-    popupAnchor: [0, -48],
+    html: `<div class="country-marker__pin"><img src="${flagUrl}" alt="" class="country-marker__flag" /></div>`,
+    iconSize: [34, 40],
+    iconAnchor: [17, 40],
+    popupAnchor: [0, -42],
   });
 }
 
-/**
- * Ícone padrão caso a bandeira não esteja disponível.
- */
 const defaultIcon = L.divIcon({
   className: 'country-marker',
-  html: `
-    <div class="country-marker__pin country-marker__pin--default">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="white" stroke="none">
-        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
-        <circle cx="12" cy="10" r="3" fill="#6366f1" />
-      </svg>
-    </div>
-  `,
-  iconSize: [40, 48],
-  iconAnchor: [20, 48],
-  popupAnchor: [0, -48],
+  html: `<div class="country-marker__pin"><svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/></svg></div>`,
+  iconSize: [34, 40],
+  iconAnchor: [17, 40],
+  popupAnchor: [0, -42],
 });
 
-/**
- * Componente de mapa interativo.
- * Exibe os países relacionados ao idioma do livro selecionado
- * usando React Leaflet e marcadores com bandeiras.
- *
- * @param {Object} props
- * @param {Array} props.countries - Lista de países para exibir no mapa.
- * @param {boolean} props.loading - Se os países estão sendo carregados.
- */
-export default function CountryMap({ countries, loading }) {
+export default function CountryMap({ countries, loading, selectedLanguage }) {
   const [mapError, setMapError] = useState(false);
+
+  const languageLabel = selectedLanguage
+    ? getLanguageName(selectedLanguage)
+    : null;
 
   if (mapError) {
     return (
       <div className="country-map__error" id="map-error">
-        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
           <polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6" />
           <line x1="8" y1="2" x2="8" y2="18" />
           <line x1="16" y1="6" x2="16" y2="22" />
@@ -89,15 +57,19 @@ export default function CountryMap({ countries, loading }) {
 
   return (
     <section className="country-map" id="country-map">
-      <h2 className="country-map__title">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-          <circle cx="12" cy="12" r="10" />
-          <line x1="2" y1="12" x2="22" y2="12" />
-          <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
-        </svg>
-        Países no Mapa
-        <span className="country-map__badge">{countries.length}</span>
-      </h2>
+      <div className="country-map__header">
+        <h2 className="country-map__title">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+            <circle cx="12" cy="12" r="10" />
+            <line x1="2" y1="12" x2="22" y2="12" />
+            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+          </svg>
+          {languageLabel
+            ? `Países que falam ${languageLabel}`
+            : 'Países no mapa'}
+          <span className="country-map__badge">{countries.length}</span>
+        </h2>
+      </div>
 
       {loading && (
         <div className="country-map__loading">
@@ -115,7 +87,7 @@ export default function CountryMap({ countries, loading }) {
           whenReady={() => setMapError(false)}
         >
           <TileLayer
-            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/">CARTO</a>'
+            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/">CARTO</a>'
             url={import.meta.env.VITE_MAP_TILE_URL || "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"}
           />
 
@@ -151,7 +123,6 @@ export default function CountryMap({ countries, loading }) {
         </MapContainer>
       </div>
 
-      {/* Lista de países abaixo do mapa */}
       {countries.length > 0 && (
         <div className="country-map__list">
           {countries.map((country) => (
@@ -163,7 +134,7 @@ export default function CountryMap({ countries, loading }) {
                   className="country-map__item-flag"
                 />
               )}
-              <span className="country-map__item-name">{country.name}</span>
+              <span>{country.name}</span>
             </div>
           ))}
         </div>
